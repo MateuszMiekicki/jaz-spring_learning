@@ -22,4 +22,12 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.11.1'
     testImplementation 'org.testcontainers:postgresql:1.14.3'
     testImplementation 'io.rest-assured:rest-assured'
+
+    /*problem with version <2.3.0
+    Errors occurred while build effective model from
+    C:\Users\haven\.gradle\caches\modules-2\files-2.1\com.sun.xml.bind\jaxb-osgi\2.2.10\c926a537af564ec047ec6308df1d0d2a03364a86\jaxb-osgi-2.2.10.pom:
+    'dependencyManagement.dependencies.dependency.systemPath' for com.sun:tools:jar must specify an absolute path but is
+    ${tools.jar} in com.sun.xml.bind:jaxb-osgi:2.2.10*/
+    // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-osgi
+    compile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
 }
