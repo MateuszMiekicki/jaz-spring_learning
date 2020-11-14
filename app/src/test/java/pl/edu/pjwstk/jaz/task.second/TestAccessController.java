@@ -30,4 +30,14 @@ public class TestAccessController {
                 .statusCode(equalTo((200)))
                 .body((equalTo("forAuthenticated")));
     }
+
+    @Test
+    public void shouldReturnCode200WhenRequestingAccessToEndpoint_forAuthorized() {
+        given()
+                .when()
+                .get("/api/forAuthorized")
+                .then()
+                .statusCode(equalTo((200)))
+                .body((equalTo("forAuthorized")));
+    }
 }

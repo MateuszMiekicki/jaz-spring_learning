@@ -14,4 +14,9 @@ public class AccessController {
     public String forAuthenticated() {
         return "forAuthenticated";
     }
+
+    @GetMapping("/forAuthorized")
+    public String forAuthorized() {
+        return "forAuthorized";
+    }
 }
