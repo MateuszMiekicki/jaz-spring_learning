@@ -9,4 +9,9 @@ public class AccessController {
     public String forAll() {
         return "forAll";
     }
+
+    @GetMapping("/forAuthenticated")
+    public String forAuthenticated() {
+        return "forAuthenticated";
+    }
 }
