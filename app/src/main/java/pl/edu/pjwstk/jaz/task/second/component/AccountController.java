@@ -58,4 +58,35 @@ public class AccountController {
             return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
         }
     }
+
+    /* @PostMapping(value = "delete")
+     public ResponseEntity<String> delete(@RequestBody Map<String, Object> payload) {
+         if (payload.isEmpty() || payload == null) {
+             return new ResponseEntity<>("You must provide a user name.", HttpStatus.BAD_REQUEST);
+         }
+         try {
+             usersRepository.delete(payload.get("username").toString());
+             return new ResponseEntity<>("Deleted.", HttpStatus.OK);
+         } catch (UserNotFoundException exception) {
+             return new ResponseEntity<>(exception.getMessage(), HttpStatus.NO_CONTENT);
+         }
+     }
+     */
+
+    @PostMapping("login")
+    public ResponseEntity<String> login(@RequestBody Map<String, Object> payload) {
+        if (payload.isEmpty() || payload == null) {
+            return new ResponseEntity<>("You must provide a user name.", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            var user = usersRepository.getUser(payload.get("username").toString());
+            if (user.getPassword().equals(payload.get("password").toString())) {
+                return new ResponseEntity<>("Logged in", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("UNAUTHORIZED", HttpStatus.UNAUTHORIZED);
+        } catch (UserNotFoundException exception) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 }

@@ -156,4 +156,56 @@ public class TestAccountController {
                 .statusCode(200)
                 .body(equalTo("You must provide a user name."));
     }
+
+    @Test
+    public void shouldReturnCode200WhenPassCorrectDataToLogin() {
+        UserDTO userAla = new UserDTO();
+        userAla.setUsername("ala");
+        userAla.setPassword("kot");
+        userAla.setRole("");
+        when(usersRepository.getUser("ala")).thenReturn((userAla));
+
+        String json = "{ \"username\": \"ala\", \"password\": \"kot\", \"role\": \"admin\" }";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/login")
+                .then()
+                .statusCode(equalTo(200))
+                .body(equalTo("Logged in"));
+    }
+
+    @Test
+    public void shouldReturnCode401WhenPassInCorrectDataToLogin() {
+        UserDTO userAla = new UserDTO();
+        userAla.setUsername("ala");
+        userAla.setPassword("Kot");
+        userAla.setRole("");
+        when(usersRepository.getUser("ala")).thenReturn((userAla));
+
+        String json = "{ \"username\": \"ala\", \"password\": \"wrongPassword\", \"role\": \"admin\" }";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/login")
+                .then()
+                .statusCode(equalTo(401))
+                .body(equalTo("UNAUTHORIZED"));
+    }
+
+    @Test
+    public void shouldReturnCode401WhenPassUserDontExist() {
+        doThrow(new UserNotFoundException("There is no user with this name")).when(usersRepository).getUser("ala");
+        String json = "{ \"username\": \"ala\", \"password\": \"Kot\", \"role\": \"admin\" }";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/login")
+                .then()
+                .statusCode(equalTo(401))
+                .body(equalTo("There is no user with this name"));
+    }
 }
