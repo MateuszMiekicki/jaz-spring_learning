@@ -135,7 +135,7 @@ public class TestAccountController {
     }
 
     @Test
-    public void shouldReturnCode204AndShortMessageWhenTryGetInformationAboutUserDoesExist() {
+    public void shouldReturnCode204AndShortMessageWhenTryGetInformationAboutUserDontExist() {
         doThrow(new UserNotFoundException("There is no user with this name")).when(usersRepository).getUser("ala");
         given()
                 .param("username", "ala")
@@ -147,7 +147,7 @@ public class TestAccountController {
     }
 
     @Test
-    public void shouldReturnCode20AndShortMessageWhenNotPassAnything() {
+    public void shouldReturnCode200AndShortMessageWhenNotPassAnything() {
         given()
                 .param("username", "")
                 .when()
