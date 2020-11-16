@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jaz.task.second;
+package pl.edu.pjwstk.jaz.task.second.component;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
