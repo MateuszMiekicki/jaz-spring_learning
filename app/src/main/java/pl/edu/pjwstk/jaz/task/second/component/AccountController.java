@@ -21,7 +21,7 @@ public class AccountController {
         this.usersRepository = usersRepository;
     }
 
-    @PostMapping(value = "register")
+    @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody Map<String, Object> payload) {
         UserDTO user = new UserDTO();
         user.setUsername(payload.get("username").toString());
