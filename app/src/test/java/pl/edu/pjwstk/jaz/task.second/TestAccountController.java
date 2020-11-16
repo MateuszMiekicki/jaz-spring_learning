@@ -12,8 +12,6 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.pjwstk.jaz.IntegrationTest;
 import pl.edu.pjwstk.jaz.task.second.component.AccountController;
@@ -22,9 +20,6 @@ import pl.edu.pjwstk.jaz.task.second.exception.BadCredentialsException;
 import pl.edu.pjwstk.jaz.task.second.exception.UserExistException;
 import pl.edu.pjwstk.jaz.task.second.exception.UserNotFoundException;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
