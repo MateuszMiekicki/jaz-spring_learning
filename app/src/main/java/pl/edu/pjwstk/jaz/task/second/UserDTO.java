@@ -1,5 +1,8 @@
 package pl.edu.pjwstk.jaz.task.second;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserDTO {
     private String username;
     private String password;
