@@ -1,9 +1,10 @@
-package pl.edu.pjwstk.jaz.task.second.component;
+package pl.edu.pjwstk.jaz.task.second.component.restController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pjwstk.jaz.task.second.component.UserDTO;
 import pl.edu.pjwstk.jaz.task.second.exception.UserNotFoundException;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
 import pl.edu.pjwstk.jaz.task.second.exception.BadCredentialsException;
