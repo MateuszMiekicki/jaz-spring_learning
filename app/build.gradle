@@ -31,3 +31,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-osgi
     compile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '6.7'
+}
+build.dependsOn wrapper
