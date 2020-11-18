@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.pjwstk.jaz.IntegrationTest;
 import pl.edu.pjwstk.jaz.task.second.component.UserDTO;
-import pl.edu.pjwstk.jaz.task.second.component.restController.AccountController;
+import pl.edu.pjwstk.jaz.task.second.component.restController.UserListController;
 import pl.edu.pjwstk.jaz.task.second.exception.UserNotFoundException;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
 
@@ -29,11 +29,11 @@ public class TestUserListController {
     @MockBean
     UsersRepository usersRepository;
     @InjectMocks
-    AccountController controller;
+    UserListController controller;
 
     @BeforeEach
     public void setup() {
-        controller = new AccountController(usersRepository);
+        controller = new UserListController(usersRepository);
     }
 
     @Test

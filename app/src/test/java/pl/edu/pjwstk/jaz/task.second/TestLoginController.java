@@ -2,8 +2,8 @@ package pl.edu.pjwstk.jaz.task.second;
 
 import io.restassured.http.ContentType;
 import org.junit.Rule;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnit;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.pjwstk.jaz.IntegrationTest;
 import pl.edu.pjwstk.jaz.task.second.component.UserDTO;
-import pl.edu.pjwstk.jaz.task.second.component.restController.AccountController;
+import pl.edu.pjwstk.jaz.task.second.component.restController.LoginController;
 import pl.edu.pjwstk.jaz.task.second.exception.UserNotFoundException;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
 
@@ -23,18 +23,18 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @IntegrationTest
-public class TestAccountController {
+public class TestLoginController {
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
     @MockBean
     UsersRepository usersRepository;
     @InjectMocks
-    AccountController controller;
+    LoginController controller;
 
     @BeforeEach
     public void setup() {
-        controller = new AccountController(usersRepository);
+        controller = new LoginController(usersRepository);
     }
 
     @Test
@@ -89,3 +89,4 @@ public class TestAccountController {
                 .body(equalTo("There is no user with this name"));
     }
 }
+
