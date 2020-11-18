@@ -22,22 +22,6 @@ public class AccountController {
         this.usersRepository = usersRepository;
     }
 
-    @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody Map<String, Object> payload) {
-        UserDTO user = new UserDTO();
-        user.setUsername(payload.get("username").toString());
-        user.setPassword(payload.get("password").toString());
-        user.setRole(payload.get("role").toString());
-        try {
-            usersRepository.insert(user);
-            return new ResponseEntity<>("Created", HttpStatus.CREATED);
-        } catch (UserExistException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK);
-        } catch (BadCredentialsException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK);
-        }
-    }
-
     @GetMapping("user")
     public ResponseEntity<String> user(@RequestParam(value = "username") List<String> username) {
         if (username.isEmpty() || username == null) {

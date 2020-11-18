@@ -1,6 +1,6 @@
 package pl.edu.pjwstk.jaz.task.second;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.pjwstk.jaz.IntegrationTest;

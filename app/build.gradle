@@ -36,3 +36,6 @@ task wrapper(type: Wrapper) {
     gradleVersion = '6.7'
 }
 build.dependsOn wrapper
+test {
+    useJUnitPlatform()
+}
