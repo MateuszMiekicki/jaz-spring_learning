@@ -38,52 +38,6 @@ public class TestAccountController {
     }
 
     @Test
-    public void shouldReturnCode200AndUserDetailsWhenPassUsername() {
-        UserDTO userAla = new UserDTO();
-        userAla.setUsername("ala");
-        userAla.setPassword("kot");
-        userAla.setRole("");
-        when(usersRepository.getUser("ala")).thenReturn(userAla);
-
-        UserDTO userBartek = new UserDTO();
-        userBartek.setUsername("ala");
-        userBartek.setPassword("kot");
-        userBartek.setRole("");
-        when(usersRepository.getUser("bartek")).thenReturn(userBartek);
-
-        given()
-                .param("username", "ala,bartek")
-                .when()
-                .get("/api/user")
-                .then()
-                .statusCode(200)
-                .body(equalTo(userAla.toString() + ",\n" + userBartek.toString()));
-    }
-
-    @Test
-    public void shouldReturnCode204AndShortMessageWhenTryGetInformationAboutUserDontExist() {
-        doThrow(new UserNotFoundException("There is no user with this name")).when(usersRepository).getUser("ala");
-        given()
-                .param("username", "ala")
-                .when()
-                .get("/api/user")
-                .then()
-                .statusCode(204)
-                .body(equalTo(""));
-    }
-
-    @Test
-    public void shouldReturnCode200AndShortMessageWhenNotPassAnything() {
-        given()
-                .param("username", "")
-                .when()
-                .get("/api/user")
-                .then()
-                .statusCode(200)
-                .body(equalTo("You must provide a user name."));
-    }
-
-    @Test
     public void shouldReturnCode200WhenPassCorrectDataToLogin() {
         UserDTO userAla = new UserDTO();
         userAla.setUsername("ala");
