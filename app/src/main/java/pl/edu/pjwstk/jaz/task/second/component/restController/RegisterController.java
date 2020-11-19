@@ -23,11 +23,7 @@ public class RegisterController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody Map<String, Object> payload) {
-        UserDTO user = new UserDTO();
-        user.setUsername(payload.get("username").toString());
-        user.setPassword(payload.get("password").toString());
-        user.setRole(payload.get("role").toString());
+    public ResponseEntity<String> register(@RequestBody UserDTO user) {
         try {
             usersRepository.insert(user);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
