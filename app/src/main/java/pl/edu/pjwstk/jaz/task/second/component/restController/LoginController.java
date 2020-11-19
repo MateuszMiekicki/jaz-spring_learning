@@ -22,7 +22,7 @@ public class LoginController {
 
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody Map<String, Object> payload) {
-        if (payload.isEmpty() || payload == null) {
+        if (payload.isEmpty()) {
             return new ResponseEntity<>("You must provide a user name.", HttpStatus.BAD_REQUEST);
         }
         try {

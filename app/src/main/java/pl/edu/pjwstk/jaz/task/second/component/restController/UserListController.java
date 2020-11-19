@@ -22,21 +22,21 @@ public class UserListController {
 
     @GetMapping("userList")
     public ResponseEntity<String> user(@RequestParam(value = "username") List<String> username) {
-        if (username.isEmpty() || username == null) {
+        if (username.isEmpty()) {
             return new ResponseEntity<>("You must provide a user name.", HttpStatus.OK);
         }
         try {
-            String string = "";
+            StringBuilder string = new StringBuilder();
             for (int i = 0; i < username.size(); ++i) {
-                string += usersRepository.getUser(username.get(i)).toString();
+                string.append(usersRepository.getUser(username.get(i)).toString());
                 if (i == (username.size() - 1)) {
                     continue;
                 }
                 if (username.size() != 1) {
-                    string += ",\n";
+                    string.append(",\n");
                 }
             }
-            return new ResponseEntity<>(string, HttpStatus.OK);
+            return new ResponseEntity<>(string.toString(), HttpStatus.OK);
         } catch (UserNotFoundException exception) {
             return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
         }

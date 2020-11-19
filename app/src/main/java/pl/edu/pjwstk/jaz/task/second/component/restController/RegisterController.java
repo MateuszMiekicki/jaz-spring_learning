@@ -11,8 +11,6 @@ import pl.edu.pjwstk.jaz.task.second.exception.BadCredentialsException;
 import pl.edu.pjwstk.jaz.task.second.exception.UserExistException;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
 
-import java.util.Map;
-
 @RestController
 public class RegisterController {
     final UsersRepository usersRepository;
@@ -27,9 +25,7 @@ public class RegisterController {
         try {
             usersRepository.insert(user);
             return new ResponseEntity<>("Created", HttpStatus.CREATED);
-        } catch (UserExistException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK);
-        } catch (BadCredentialsException exception) {
+        } catch (UserExistException | BadCredentialsException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK);
         }
     }

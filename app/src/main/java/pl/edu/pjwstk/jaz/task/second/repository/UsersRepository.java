@@ -28,21 +28,10 @@ public class UsersRepository {
         users.put(user.getUsername(), user);
     }
 
-    public void delete(String username) {
-        if (users.containsKey(username)) {
-            users.remove(username);
-        }
-        throw new UserNotFoundException("There is no user with this name: " + username);
-    }
-
     public UserDTO getUser(String username) {
         if (users.containsKey(username)) {
             return users.get(username);
         }
         throw new UserNotFoundException("There is no user with this name: " + username);
-    }
-
-    public void importUsersByOverwritingEveryone(Map<String, UserDTO> users){
-        this.users = users;
     }
 }
