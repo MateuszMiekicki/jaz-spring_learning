@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jaz.task.second.filters;
+package pl.edu.pjwstk.jaz.task.second.manualSpringSecurity.filters;
 
 import org.springframework.http.HttpStatus;
 import pl.edu.pjwstk.jaz.task.second.component.UserSession;

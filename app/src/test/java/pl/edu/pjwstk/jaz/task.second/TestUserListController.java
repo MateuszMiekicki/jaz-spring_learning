@@ -1,10 +1,8 @@
 package pl.edu.pjwstk.jaz.task.second;
 
 import org.junit.Rule;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -12,10 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.pjwstk.jaz.IntegrationTest;
 import pl.edu.pjwstk.jaz.task.second.component.UserDTO;
 import pl.edu.pjwstk.jaz.task.second.component.UserSession;
-import pl.edu.pjwstk.jaz.task.second.component.restController.UserListController;
 import pl.edu.pjwstk.jaz.task.second.exception.UserNotFoundException;
-import pl.edu.pjwstk.jaz.task.second.filters.AuthenticationFilter;
-import pl.edu.pjwstk.jaz.task.second.filters.AuthorizationFilter;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
 
 import static io.restassured.RestAssured.given;

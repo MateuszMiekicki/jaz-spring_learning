@@ -1,11 +1,11 @@
-package pl.edu.pjwstk.jaz.task.second.configuration;
+package pl.edu.pjwstk.jaz.task.second.manualSpringSecurity.configuration;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.edu.pjwstk.jaz.task.second.filters.AuthenticationFilter;
+import pl.edu.pjwstk.jaz.task.second.manualSpringSecurity.filters.AuthenticationFilter;
 import pl.edu.pjwstk.jaz.task.second.component.UserSession;
-import pl.edu.pjwstk.jaz.task.second.filters.AuthorizationFilter;
+import pl.edu.pjwstk.jaz.task.second.manualSpringSecurity.filters.AuthorizationFilter;
 
 @Configuration
 public class WebSecurityConfiguration {
