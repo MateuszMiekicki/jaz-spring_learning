@@ -23,7 +23,7 @@ public class UsersRepository {
             throw new BadCredentialsException("Incorrect data. Password or login is empty.");
         }
         if (user.getRole() == null || user.getRole().isEmpty()) {
-            user.setRole("");
+            user.setRole("user");
         }
         users.put(user.getUsername(), user);
     }

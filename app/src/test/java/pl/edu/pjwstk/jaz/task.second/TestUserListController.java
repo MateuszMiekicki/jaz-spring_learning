@@ -11,8 +11,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.pjwstk.jaz.IntegrationTest;
 import pl.edu.pjwstk.jaz.task.second.component.UserDTO;
+import pl.edu.pjwstk.jaz.task.second.component.UserSession;
 import pl.edu.pjwstk.jaz.task.second.component.restController.UserListController;
 import pl.edu.pjwstk.jaz.task.second.exception.UserNotFoundException;
+import pl.edu.pjwstk.jaz.task.second.filters.AuthenticationFilter;
+import pl.edu.pjwstk.jaz.task.second.filters.AuthorizationFilter;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
 
 import static io.restassured.RestAssured.given;
@@ -28,27 +31,24 @@ public class TestUserListController {
 
     @MockBean
     UsersRepository usersRepository;
-    @InjectMocks
-    UserListController controller;
 
-    @BeforeEach
-    public void setup() {
-        controller = new UserListController(usersRepository);
-    }
+    @MockBean
+    UserSession session;
 
     @Test
     public void shouldReturnCode200AndUserDetailsWhenPassUsername() {
         UserDTO userAla = new UserDTO();
         userAla.setUsername("ala");
         userAla.setPassword("kot");
-        userAla.setRole("");
         when(usersRepository.getUser("ala")).thenReturn(userAla);
 
         UserDTO userBartek = new UserDTO();
         userBartek.setUsername("ala");
         userBartek.setPassword("kot");
-        userBartek.setRole("");
         when(usersRepository.getUser("bartek")).thenReturn(userBartek);
+
+        when(session.isLoggedIn()).thenReturn(true);
+        when(session.getRole()).thenReturn("admin");
 
         given()
                 .param("username", "ala,bartek")
@@ -60,7 +60,21 @@ public class TestUserListController {
     }
 
     @Test
+    public void shouldReturnCode401WhenRequestIsMadeByUserWithoutRole() {
+        when(session.isLoggedIn()).thenReturn(true);
+        when(session.getRole()).thenReturn("user");
+        given()
+                .param("username", "ala,bartek")
+                .when()
+                .get("/api/userList")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
     public void shouldReturnCode204AndShortMessageWhenTryGetInformationAboutUserDontExist() {
+        when(session.isLoggedIn()).thenReturn(true);
+        when(session.getRole()).thenReturn("admin");
         doThrow(new UserNotFoundException("There is no user with this name")).when(usersRepository).getUser("ala");
         given()
                 .param("username", "ala")
@@ -73,6 +87,8 @@ public class TestUserListController {
 
     @Test
     public void shouldReturnCode200AndShortMessageWhenNotPassAnything() {
+        when(session.isLoggedIn()).thenReturn(true);
+        when(session.getRole()).thenReturn("admin");
         given()
                 .param("username", "")
                 .when()

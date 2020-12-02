@@ -22,22 +22,20 @@ public class TestAccessController {
     }
 
     @Test
-    public void shouldReturnCode200WhenRequestingAccessToEndpoint_forAuthenticated() {
+    public void shouldReturnCode401WhenRequestingAccessToEndpoint_forAuthenticatedAsAnUnauthorizedUser() {
         given()
                 .when()
                 .get("/api/forAuthenticated")
                 .then()
-                .statusCode(equalTo((200)))
-                .body((equalTo("forAuthenticated")));
+                .statusCode(equalTo((401)));
     }
 
     @Test
-    public void shouldReturnCode200WhenRequestingAccessToEndpoint_forAuthorized() {
+    public void shouldReturnCode401WhenRequestingAccessToEndpoint_forAuthorizedAsAnUnauthorizedUser() {
         given()
                 .when()
                 .get("/api/forAuthorized")
                 .then()
-                .statusCode(equalTo((200)))
-                .body((equalTo("forAuthorized")));
+                .statusCode(equalTo((401)));
     }
 }

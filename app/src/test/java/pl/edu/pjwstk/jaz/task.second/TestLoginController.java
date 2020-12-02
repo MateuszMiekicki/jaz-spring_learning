@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.edu.pjwstk.jaz.IntegrationTest;
 import pl.edu.pjwstk.jaz.task.second.component.UserDTO;
+import pl.edu.pjwstk.jaz.task.second.component.UserSession;
 import pl.edu.pjwstk.jaz.task.second.component.restController.LoginController;
 import pl.edu.pjwstk.jaz.task.second.exception.UserNotFoundException;
 import pl.edu.pjwstk.jaz.task.second.repository.UsersRepository;
@@ -34,7 +35,7 @@ public class TestLoginController {
 
     @BeforeEach
     public void setup() {
-        controller = new LoginController(usersRepository);
+        controller = new LoginController(usersRepository, new UserSession());
     }
 
     @Test
