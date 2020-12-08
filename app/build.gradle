@@ -30,6 +30,9 @@ dependencies {
     ${tools.jar} in com.sun.xml.bind:jaxb-osgi:2.2.10*/
     // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-osgi
     compile group: 'com.sun.xml.bind', name: 'jaxb-osgi', version: '2.3.3'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.2'
 }
 
 task wrapper(type: Wrapper) {
