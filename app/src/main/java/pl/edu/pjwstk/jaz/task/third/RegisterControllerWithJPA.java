@@ -20,7 +20,7 @@ public class RegisterControllerWithJPA {
     }
 
     @PostMapping("third/register")
-    public ResponseEntity<String> login(@RequestBody UserDTO user) {
+    public ResponseEntity<String> register(@RequestBody UserDTO user) {
         if (user.isEmpty()) {
             return new ResponseEntity<>("You must provide a user name and password.", HttpStatus.BAD_REQUEST);
         } else if (user.usernameIsEmpty()) {
