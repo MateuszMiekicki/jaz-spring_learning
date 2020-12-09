@@ -14,6 +14,7 @@ public class WebSecurityConfiguration {
         FilterRegistrationBean<AuthenticationFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new AuthenticationFilter(userSession));
         registrationBean.addUrlPatterns("/forAuthenticated");
+        registrationBean.addUrlPatterns("/third/getUser/*");
         return registrationBean;
     }
 

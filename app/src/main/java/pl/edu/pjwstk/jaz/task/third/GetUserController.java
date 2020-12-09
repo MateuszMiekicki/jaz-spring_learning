@@ -17,7 +17,7 @@ public class GetUserController {
     @GetMapping("third/getUser/{username}")
     public ResponseEntity<String> findByUsername(@PathVariable("username") String username) {
         var user = userService.findByUsername(username);
-        if (user.isEmpty()) {
+        if (!user.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(user.get().toString(), HttpStatus.OK);

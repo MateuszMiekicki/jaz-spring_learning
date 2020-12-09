@@ -8,6 +8,11 @@ public class UserDTO {
     public UserDTO() {
     }
 
+    public UserDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public UserDTO(String username, String password, String idRole) {
         this.username = username;
         this.password = password;

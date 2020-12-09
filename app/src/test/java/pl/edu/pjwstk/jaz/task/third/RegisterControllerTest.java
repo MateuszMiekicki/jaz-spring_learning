@@ -15,7 +15,7 @@ public class RegisterControllerTest {
 
     @Test
     public void shouldReturnCode201WhenGiveUniqueUsername() {
-        String json = "{ \"username\": \"ala\", \"password\": \"kot\", \"idRole\": 2 }";
+        String json = "{ \"username\": \"ola\", \"password\": \"kot\", \"idRole\": 2 }";
         given()
                 .contentType(ContentType.JSON)
                 .body(json)

@@ -21,15 +21,9 @@ public class AuthenticationFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         if (isUserLogged()) {
             super.doFilter(request, response, chain);
-            if(!isSiteAllowed(request))
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
-    }
-
-    private boolean isSiteAllowed(HttpServletRequest request) {
-        return false;
     }
 
     private boolean isUserLogged() {
