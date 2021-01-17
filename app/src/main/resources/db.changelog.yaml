@@ -15,3 +15,11 @@ databaseChangeLog:
         stripComments: true
         splitStatements: false
         path: db.changelog/20201205_add_user.sql
+  - changeSet:
+      id: 20210117_allezon_structure.sql
+      author: Mateusz Miekicki
+      sqlFile:
+        relativeToChangelogFile: true
+        stripComments: true
+        splitStatements: false
+        path: db.changelog/20210117_allezon_structure.sql
