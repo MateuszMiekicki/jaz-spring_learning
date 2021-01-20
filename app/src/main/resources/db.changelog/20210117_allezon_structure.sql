@@ -1,7 +1,3 @@
-DROP TABLE IF EXISTS "user";
-DROP TABLE IF EXISTS user_role;
-DROP TABLE IF EXISTS test1;
-
 CREATE TABLE "role"
 (
     id   INT,
