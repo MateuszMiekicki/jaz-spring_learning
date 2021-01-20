@@ -1,6 +1,5 @@
 package pl.edu.pjwstk.jaz.allezon.service;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pjwstk.jaz.allezon.DTO.UserDTO;
@@ -15,10 +14,11 @@ import javax.transaction.Transactional;
 @Service
 public class RegisterService {
     private final EntityManager entityManager;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
-    public RegisterService(EntityManager entityManager) {
+    public RegisterService(EntityManager entityManager, PasswordEncoder passwordEncoder) {
         this.entityManager = entityManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void saveUser(UserDTO user) {
