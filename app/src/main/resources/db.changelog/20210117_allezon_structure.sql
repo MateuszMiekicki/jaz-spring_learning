@@ -29,7 +29,7 @@ CREATE TABLE "user"
 );
 
 INSERT INTO "user"
-VALUES (1, 1, 'admin@gmail.com', 'admin');
+VALUES (0, 1, 'admin@gmail.com', 'admin');
 
 CREATE TABLE section
 (
