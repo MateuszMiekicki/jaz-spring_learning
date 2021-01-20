@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jaz.allezon.service;
+package pl.edu.pjwstk.jaz.allezon.repository;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,14 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
-//https://stackoverflow.com/questions/32269192/spring-no-entitymanager-with-actual-transaction-available-for-current-thread
-@Transactional
 @Service
-public class RegisterService {
+@Transactional
+public class UserRepository {
     private final EntityManager entityManager;
     private final PasswordEncoder passwordEncoder;
 
-    public RegisterService(EntityManager entityManager, PasswordEncoder passwordEncoder) {
+    public UserRepository(EntityManager entityManager, PasswordEncoder passwordEncoder) {
         this.entityManager = entityManager;
         this.passwordEncoder = passwordEncoder;
     }

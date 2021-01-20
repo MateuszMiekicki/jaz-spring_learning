@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @IntegrationTest
-public class TestRegisterServiceController {
+public class TestRegisterController {
     @Test
     public void shouldReturnCode400WhenGiveEmptyPasswordOrEmail() {
         String json = "{ \"email\": \"\", \"password\": \"kot\"}";
