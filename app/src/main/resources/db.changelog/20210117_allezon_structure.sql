@@ -51,15 +51,16 @@ CREATE TABLE category
 CREATE TABLE auction
 (
     id          INT,
-    author      INT     NOT NULL,
+    author_id   INT     NOT NULL,
     category_id INT     NOT NULL,
 
     title       VARCHAR NOT NULL,
     description VARCHAR NOT NULL,
+    price       DECIMAL NOT NULL,
 
     PRIMARY KEY (id),
     CONSTRAINT user_fk
-        FOREIGN KEY (author)
+        FOREIGN KEY (author_id)
             REFERENCES "user" (id),
     CONSTRAINT category_fk
         FOREIGN KEY (category_id)
@@ -68,11 +69,10 @@ CREATE TABLE auction
 
 CREATE TABLE auction_image
 (
-    id          INT,
-    auction_id  INT     NOT NULL,
+    id         INT,
+    auction_id INT     NOT NULL,
 
-    path        VARCHAR NOT NULL,
-    description VARCHAR NOT NULL,
+    url        VARCHAR NOT NULL,
 
     PRIMARY KEY (id),
     CONSTRAINT auction_fk

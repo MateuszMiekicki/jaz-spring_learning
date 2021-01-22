@@ -26,4 +26,20 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Integer getRole_id() {
+        return role_id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
