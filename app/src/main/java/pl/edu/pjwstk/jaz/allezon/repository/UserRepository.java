@@ -59,11 +59,11 @@ public class UserRepository {
     public boolean login(UserDTO userDTO) {
         UserEntity userEntity = findByEmail(userDTO.getEmail());
         if (userEntity != null) {
-            if (userEntity.getPassword().equals(passwordEncoder.encode(userDTO.getPassword()))) {
+            if (passwordEncoder.matches(userDTO.getPassword(), userEntity.getPassword())) {
                 userSession.logIn();
+                SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(userEntity, entityManager));
+                return true;
             }
-            SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(userEntity, entityManager));
-            return true;
         }
         return false;
     }

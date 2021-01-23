@@ -35,6 +35,49 @@ public class TestLoginController {
     }
 
     @Test
+    public void shouldReturnCode401WhenGiveCorrectEmailAndWrongPassword() {
+        String json = "{ \"email\": \"loginCorrectButWrongPassword@test.com\", \"password\": \"kot\"}";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/register")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CREATED))
+                .body(equalTo("Registered."));
+        json = "{ \"email\": \"loginCorrectButWrongPassword@test.com\", \"password\": \"kt\"}";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/login")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_UNAUTHORIZED))
+                .body(equalTo("Email or password is incorrect."));
+    }
+
+    @Test
+    public void shouldReturnCode401WhenGiveWrongEmailAndCorrectPassword() {
+        String json = "{ \"email\": \"WrongEmailAndCorrectPassword@test.com\", \"password\": \"kot\"}";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/register")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CREATED))
+                .body(equalTo("Registered."));
+        json = "{ \"email\": \"ButWrongPassword@test.com\", \"password\": \"kot\"}";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/login")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_UNAUTHORIZED))
+                .body(equalTo("Email or password is incorrect."));
+    }
+    @Test
     public void shouldReturnCode401WhenGiveDataWhichDontExistsInDatabase() {
         String json = "{ \"email\": \"loginCertainlyDoesNotExist@test.com\", \"password\": \"kot\"}";
         given()
