@@ -24,9 +24,6 @@ CREATE TABLE "user"
             REFERENCES "role" (id)
 );
 
-INSERT INTO "user"
-VALUES (0, 1, 'admin@gmail.com', 'admin');
-
 CREATE TABLE section
 (
     id   INT,
