@@ -14,6 +14,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/allezon/login").permitAll()
                 .antMatchers("/allezon/register").permitAll()
+                .antMatchers("/allezon/sections").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
