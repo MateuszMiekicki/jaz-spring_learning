@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PostMapping("allezon/categories/add")
+    @PostMapping("allezon/categories")
     public ResponseEntity<String> addSection(@RequestBody CategoryDTO categoryDTO) {
         if (categoryRepository.findByName(categoryDTO.getName()) != null) {
             return new ResponseEntity<>("Such an categories exists in the database.", HttpStatus.CONFLICT);
@@ -35,7 +35,7 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("allezon/categories/delete")
+    @DeleteMapping("allezon/categories")
     public ResponseEntity<String> deleteSection(@RequestBody CategoryDTO categoryDTO) {
         CategoryEntity categoryEntity = categoryRepository.findByName(categoryDTO.getName());
         if (categoryEntity == null) {
