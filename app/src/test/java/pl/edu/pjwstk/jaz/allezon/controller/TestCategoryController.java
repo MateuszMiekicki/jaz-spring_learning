@@ -27,14 +27,14 @@ public class TestCategoryController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("/api/allezon/categories/add")
+                .post("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
         given()
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .delete("/api/allezon/categories/add")
+                .delete("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
 
@@ -53,7 +53,7 @@ public class TestCategoryController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("/api/allezon/categories/add")
+                .post("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_CREATED));
 
@@ -70,7 +70,7 @@ public class TestCategoryController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .delete("/api/allezon/categories/delete")
+                .delete("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_NO_CONTENT));
 
@@ -107,7 +107,7 @@ public class TestCategoryController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("/api/allezon/categories/add")
+                .post("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
         given()
@@ -115,7 +115,7 @@ public class TestCategoryController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .delete("/api/allezon/categories/delete")
+                .delete("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
         given()
