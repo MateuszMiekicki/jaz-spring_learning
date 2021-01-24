@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @IntegrationTest
-public class TestSectionController {
+public class TestCategoryController {
     @Test
-    public void completeTestSectionForAdminRole() {
+    public void completeTestCategoriesForAdminRole() {
         given()
                 .when()
-                .get("/api/allezon/sections")
+                .get("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_OK))
                 .body(equalTo("[]"));
@@ -27,14 +27,14 @@ public class TestSectionController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("/api/allezon/sections/add")
+                .post("/api/allezon/categories/add")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
         given()
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .delete("/api/allezon/sections/add")
+                .delete("/api/allezon/categories/add")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
 
@@ -53,13 +53,13 @@ public class TestSectionController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("/api/allezon/sections/add")
+                .post("/api/allezon/categories/add")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_CREATED));
 
         var response = given()
                 .when()
-                .get("/api/allezon/sections")
+                .get("/api/allezon/categories")
                 .thenReturn();
         String content = response.getBody().asString();
         assert (content.contains("car") == true);
@@ -70,13 +70,13 @@ public class TestSectionController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .delete("/api/allezon/sections/delete")
+                .delete("/api/allezon/categories/delete")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_NO_CONTENT));
 
         given()
                 .when()
-                .get("/api/allezon/sections")
+                .get("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_OK))
                 .body(equalTo("[]"));
@@ -107,7 +107,7 @@ public class TestSectionController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("/api/allezon/sections/add")
+                .post("/api/allezon/categories/add")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
         given()
@@ -115,13 +115,13 @@ public class TestSectionController {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .delete("/api/allezon/sections/delete")
+                .delete("/api/allezon/categories/delete")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
         given()
                 .cookies(cookies.getCookies())
                 .when()
-                .get("/api/allezon/sections")
+                .get("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_OK))
                 .body(equalTo("[]"));

@@ -24,7 +24,7 @@ CREATE TABLE "user"
             REFERENCES "role" (id)
 );
 
-CREATE TABLE section
+CREATE TABLE category
 (
     id   INT,
     name VARCHAR NOT NULL UNIQUE,
@@ -32,17 +32,17 @@ CREATE TABLE section
     PRIMARY KEY (id)
 );
 
-CREATE TABLE category
+CREATE TABLE subcategory
 (
-    id         INT,
-    section_id INT     NOT NULL,
+    id          INT,
+    category_id INT     NOT NULL,
 
-    name       VARCHAR NOT NULL UNIQUE,
+    name        VARCHAR NOT NULL UNIQUE,
 
     PRIMARY KEY (id),
     CONSTRAINT section_fk
-        FOREIGN KEY (section_id)
-            REFERENCES section (id)
+        FOREIGN KEY (category_id)
+            REFERENCES category (id)
 );
 
 CREATE TABLE auction

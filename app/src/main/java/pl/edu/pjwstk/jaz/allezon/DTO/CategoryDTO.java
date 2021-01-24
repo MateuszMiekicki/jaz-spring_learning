@@ -1,12 +1,12 @@
 package pl.edu.pjwstk.jaz.allezon.DTO;
 
-public class SectionDTO {
+public class CategoryDTO {
     private String name;
 
-    public SectionDTO() {
+    public CategoryDTO() {
     }
 
-    public SectionDTO(String name) {
+    public CategoryDTO(String name) {
         this.name = name;
     }
 
