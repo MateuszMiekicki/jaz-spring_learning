@@ -37,7 +37,7 @@ CREATE TABLE subcategory
     id          INT,
     category_id INT     NOT NULL,
 
-    name        VARCHAR NOT NULL UNIQUE,
+    name        VARCHAR NOT NULL,
 
     PRIMARY KEY (id),
     CONSTRAINT section_fk

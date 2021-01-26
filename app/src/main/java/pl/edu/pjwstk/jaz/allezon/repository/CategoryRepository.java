@@ -28,6 +28,18 @@ public class CategoryRepository {
         entityManager.remove(categoryEntity);
     }
 
+    public CategoryEntity findById(Long id) {
+        try {
+            CategoryEntity categoryEntity = entityManager
+                    .createQuery("select se from CategoryEntity se where se.id=:id", CategoryEntity.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            return categoryEntity;
+        } catch (NoResultException msg) {
+            return null;
+        }
+    }
+
     public CategoryEntity findByName(String name) {
         try {
             CategoryEntity categoryEntity = entityManager

@@ -7,16 +7,20 @@ import org.springframework.web.bind.annotation.*;
 
 import pl.edu.pjwstk.jaz.allezon.DTO.CategoryDTO;
 import pl.edu.pjwstk.jaz.allezon.entity.CategoryEntity;
+import pl.edu.pjwstk.jaz.allezon.entity.SubcategoryEntity;
 import pl.edu.pjwstk.jaz.allezon.repository.CategoryRepository;
+import pl.edu.pjwstk.jaz.allezon.repository.SubcategoryRepository;
 
 import java.util.List;
 
 @RestController
 public class CategoryController {
     private final CategoryRepository categoryRepository;
+    private final SubcategoryRepository subcategoryRepository;
 
-    public CategoryController(CategoryRepository categoryRepository) {
+    public CategoryController(CategoryRepository categoryRepository, SubcategoryRepository subcategoryRepository) {
         this.categoryRepository = categoryRepository;
+        this.subcategoryRepository = subcategoryRepository;
     }
 
     @GetMapping("allezon/categories")
@@ -40,6 +44,9 @@ public class CategoryController {
         CategoryEntity categoryEntity = categoryRepository.findByName(categoryDTO.getName());
         if (categoryEntity == null) {
             return new ResponseEntity<>("Such an categories not exists in the database.", HttpStatus.CONFLICT);
+        }
+        for(SubcategoryEntity subcategoryEntity : subcategoryRepository.getSubcategory(categoryEntity)){
+            subcategoryRepository.deleteSubcategory(subcategoryEntity);
         }
         categoryRepository.deleteCategory(categoryEntity);
         return new ResponseEntity("Deleted categories", HttpStatus.NO_CONTENT);
