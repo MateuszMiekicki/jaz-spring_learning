@@ -61,6 +61,7 @@ public class UserRepository {
         if (userEntity != null) {
             if (passwordEncoder.matches(userDTO.getPassword(), userEntity.getPassword())) {
                 userSession.logIn();
+                userSession.setUserId(userEntity.getId());
                 SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(userEntity, entityManager));
                 return true;
             }
