@@ -5,35 +5,37 @@ import java.util.List;
 public class AuctionDTO {
     private Long auctionId;
     private Long authorId;
-    private Long categoryId;
-    private Long subcategoryId;
+    private String categoryName;
+    private String subcategoryName;
     private String title;
     private String description;
     private Double price;
     private List<AuctionImageDTO> images;
+    private List<AuctionParameterDTO> parameters;
 
     public AuctionDTO(){
-
     }
 
-    public AuctionDTO(Long auctionId, Long authorId, Long categoryId, Long subcategoryId, String title, String description, Double price, List<AuctionImageDTO> images) {
+    public AuctionDTO(Long auctionId) {
         this.auctionId = auctionId;
-        this.authorId = authorId;
-        this.categoryId = categoryId;
-        this.subcategoryId = subcategoryId;
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.images = images;
     }
 
-    public AuctionDTO(Long categoryId, Long subcategoryId, String title, String description, Double price, List<AuctionImageDTO> images) {
-        this.categoryId = categoryId;
-        this.subcategoryId = subcategoryId;
+    public AuctionDTO(String categoryName, String subcategoryName, String title, String description, Double price, List<AuctionImageDTO> images, List<AuctionParameterDTO> parameters) {
+        this.categoryName = categoryName;
+        this.subcategoryName = subcategoryName;
         this.title = title;
         this.description = description;
         this.price = price;
         this.images = images;
+        this.parameters = parameters;
+    }
+
+    public Long getAuctionId() {
+        return auctionId;
+    }
+
+    public void setAuctionId(Long auctionId) {
+        this.auctionId = auctionId;
     }
 
     public Long getAuthorId() {
@@ -44,20 +46,20 @@ public class AuctionDTO {
         this.authorId = authorId;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public Long getSubcategoryId() {
-        return subcategoryId;
+    public String getSubcategoryName() {
+        return subcategoryName;
     }
 
-    public void setSubcategoryId(Long subcategoryId) {
-        this.subcategoryId = subcategoryId;
+    public void setSubcategoryName(String subcategoryName) {
+        this.subcategoryName = subcategoryName;
     }
 
     public String getTitle() {
@@ -92,11 +94,11 @@ public class AuctionDTO {
         this.images = images;
     }
 
-    public Long getAuctionId() {
-        return auctionId;
+    public List<AuctionParameterDTO> getParameters() {
+        return parameters;
     }
 
-    public void setAuctionId(Long auctionId) {
-        this.auctionId = auctionId;
+    public void setParameters(List<AuctionParameterDTO> parameters) {
+        this.parameters = parameters;
     }
 }

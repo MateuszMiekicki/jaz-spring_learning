@@ -84,10 +84,15 @@ CREATE TABLE auction_image
 CREATE TABLE parameter
 (
     id   INT,
-    name VARCHAR NOT NULL,
+    name VARCHAR NOT NULL UNIQUE,
 
     PRIMARY KEY (id)
 );
+
+INSERT INTO parameter
+VALUES (1, 'parm1'),
+       (2, 'parm2'),
+       (3, 'parm3');
 
 CREATE TABLE auction_parameter
 (

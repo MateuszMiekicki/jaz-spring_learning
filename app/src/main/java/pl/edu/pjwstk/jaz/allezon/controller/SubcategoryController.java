@@ -43,12 +43,12 @@ public class SubcategoryController {
 
     @PreAuthorize("hasAuthority('admin')")
     @DeleteMapping("allezon/categories/subcategories")
-    public ResponseEntity<List<SubcategoryEntity>> daleteSubcategory(@RequestBody SubcategoryDTO subcategoryDTO) {
+    public ResponseEntity<List<SubcategoryEntity>> deleteSubcategory(@RequestBody SubcategoryDTO subcategoryDTO) {
         CategoryEntity categoryEntity = categoryRepository.findById(subcategoryDTO.getCategoryId());
         if (categoryRepository.findById(subcategoryDTO.getCategoryId()) == null) {
             return new ResponseEntity("No subcategories in the selected category.", HttpStatus.NOT_FOUND);
         }
-        SubcategoryEntity subcategoryEntity = subcategoryRepository.findByNameAndId(categoryEntity.getId(), subcategoryDTO.getName());
+        SubcategoryEntity subcategoryEntity = subcategoryRepository.findByIdCategoryAndNameSubcategory(categoryEntity.getId(), subcategoryDTO.getName());
         if (subcategoryEntity == null) {
             return new ResponseEntity("Such an subcategory exists in the category.", HttpStatus.CONFLICT);
         }

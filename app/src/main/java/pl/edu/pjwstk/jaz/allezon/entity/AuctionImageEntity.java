@@ -9,7 +9,7 @@ public class AuctionImageEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "auction_id")
-    private Long sectionId;
+    private Long auctionId;
     @Column(name = "url")
     private String url;
 
@@ -21,12 +21,12 @@ public class AuctionImageEntity {
         this.id = id;
     }
 
-    public Long getSectionId() {
-        return sectionId;
+    public Long getAuctionId() {
+        return auctionId;
     }
 
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
+    public void setAuctionId(Long sectionId) {
+        this.auctionId = sectionId;
     }
 
     public String getUrl() {

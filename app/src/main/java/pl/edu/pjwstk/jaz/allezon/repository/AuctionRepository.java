@@ -1,10 +1,10 @@
 package pl.edu.pjwstk.jaz.allezon.repository;
 
 import org.springframework.stereotype.Repository;
-import pl.edu.pjwstk.jaz.allezon.DTO.AuctionDTO;
 import pl.edu.pjwstk.jaz.allezon.entity.AuctionEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public class AuctionRepository {
     private final EntityManager entityManager;
+    private Long lastId;
 
     public AuctionRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -23,27 +24,38 @@ public class AuctionRepository {
                 .getResultList();
     }
 
-    public AuctionEntity addAuction(AuctionDTO auctionDTO) {
-        AuctionEntity auctionEntity = new AuctionEntity();
-        auctionEntity.setAuthorId(auctionDTO.getAuthorId());
-        auctionEntity.setCategoryId(auctionDTO.getCategoryId());
-        auctionEntity.setDescription(auctionDTO.getDescription());
-        auctionEntity.setPrice(auctionDTO.getPrice());
-        auctionEntity.setTitle(auctionDTO.getTitle());
-        auctionEntity.setSubcategoryId(auctionDTO.getSubcategoryId());
+    public void addAuction(AuctionEntity auctionEntity) {
         entityManager.persist(auctionEntity);
-        return auctionEntity;
+        setLastId(auctionEntity.getId());
     }
 
-    public void updateAuction(AuctionDTO auctionDTO){
-        AuctionEntity auctionEntity = new AuctionEntity();
-        auctionEntity.setId(auctionDTO.getAuctionId());
-        auctionEntity.setAuthorId(auctionDTO.getAuthorId());
-        auctionEntity.setCategoryId(auctionDTO.getCategoryId());
-        auctionEntity.setDescription(auctionDTO.getDescription());
-        auctionEntity.setPrice(auctionDTO.getPrice());
-        auctionEntity.setTitle(auctionDTO.getTitle());
-        auctionEntity.setSubcategoryId(auctionDTO.getSubcategoryId());
+    public void updateAuction(AuctionEntity auctionEntity) {
         entityManager.merge(auctionEntity);
+    }
+
+    public Long getLastId() {
+        return lastId;
+    }
+
+    public void setLastId(Long lastId) {
+        this.lastId = lastId;
+    }
+
+    public AuctionEntity findByAuthorIdAndAuctionId(Long authorId, Long auctionId) {
+        try {
+            AuctionEntity auctionEntity = entityManager
+                    .createQuery("select ae from AuctionEntity ae where ae.authorId=:authorId and ae.id=:auctionId", AuctionEntity.class)
+                    .setParameter("authorId", authorId)
+                    .setParameter("auctionId", auctionId)
+                    .getSingleResult();
+            return auctionEntity;
+        } catch (NoResultException msg) {
+            return null;
+        }
+
+    }
+
+    public void deleteAuction(AuctionEntity auctionEntity) {
+        entityManager.remove(auctionEntity);
     }
 }

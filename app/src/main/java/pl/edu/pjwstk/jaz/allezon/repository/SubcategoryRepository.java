@@ -30,7 +30,7 @@ public class SubcategoryRepository {
         entityManager.remove(subcategoryEntity);
     }
 
-    public SubcategoryEntity findByNameAndId(Long categoryId, String name) {
+    public SubcategoryEntity findByIdCategoryAndNameSubcategory(Long categoryId, String name) {
         try {
             SubcategoryEntity subcategoryEntity = entityManager
                     .createQuery("select se from SubcategoryEntity se where se.name=:name and se.categoryId=:categoryId", SubcategoryEntity.class)
