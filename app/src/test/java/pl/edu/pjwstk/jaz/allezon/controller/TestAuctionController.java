@@ -262,4 +262,69 @@ public class TestAuctionController {
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_NO_CONTENT));
     }
+
+
+    @Test
+    public void shouldReturnCode200WhenUpdateAuction() throws JSONException {
+        String json = "{ \"email\": \"subcategoryUser@test.com\", \"password\": \"kot\"}";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/register")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CREATED))
+                .body(equalTo("Registered."));
+        var cookies = given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/login")
+                .thenReturn();
+        json = "{ \"categoryName\": \"car\", \"subcategoryName\": \"damper\", \"title\": \"basetitle\", \"description\": \"description\", \"price\": 12.4, \"images\": [ { \"url\": \"ala\" }, { \"url\": \"ala\" } ], \"parameters\": [ { \"name\": \"parm1\", \"value\": \"off\" } ] }";
+        given()
+                .cookies(cookies.getCookies())
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/auctions")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CREATED));
+        var body = given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .get("/api/allezon/auctions")
+                .thenReturn();
+        assert (body.statusCode() == HttpStatus.SC_OK);
+        JSONArray content = new JSONArray(body.getBody().asString());
+        int auctionId = (int) content.getJSONObject(0).get("id");
+        json = "{\"auctionId\":" + auctionId + ",\"categoryName\": \"car\", \"subcategoryName\": \"damper\", \"title\": \"anotherTitle\", \"description\": \"description\", \"price\": 12.4, \"images\": [ { \"url\": \"ala\" }, { \"url\": \"ala\" } ], \"parameters\": [ { \"name\": \"parm1\", \"value\": \"off\" } ] }";
+        given()
+                .cookies(cookies.getCookies())
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .put("/api/allezon/auctions")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_OK));
+        var assertReturnValue = given()
+                .when()
+                .get("/api/allezon/auctions")
+                .thenReturn();
+        content = new JSONArray(assertReturnValue.getBody().asString());
+        System.out.println(content);
+        assert (assertReturnValue.statusCode() == HttpStatus.SC_OK);
+        assert (content.getJSONObject(0).get("title").equals("anotherTitle"));
+
+        json = "{ \"auctionId\": \"" + content.getJSONObject(0).get("id") + "\"}";
+        given()
+                .cookies(cookies.getCookies())
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .delete("/api/allezon/auctions")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_NO_CONTENT));
+    }
 }

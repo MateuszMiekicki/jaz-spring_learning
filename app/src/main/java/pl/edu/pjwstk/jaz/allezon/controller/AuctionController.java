@@ -95,6 +95,7 @@ public class AuctionController {
         }
         auctionEntity.setPrice(auctionDTO.getPrice());
         auctionEntity.setDescription(auctionDTO.getDescription());
+        auctionEntity.setTitle(auctionDTO.getTitle());
         CategoryEntity categoryEntity = categoryRepository.findByName(auctionDTO.getCategoryName());
         if (categoryEntity == null) {
             return new ResponseEntity("The selected category does not exist.", HttpStatus.NOT_FOUND);

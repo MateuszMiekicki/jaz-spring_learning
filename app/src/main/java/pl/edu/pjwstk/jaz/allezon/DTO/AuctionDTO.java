@@ -20,6 +20,17 @@ public class AuctionDTO {
         this.auctionId = auctionId;
     }
 
+    public AuctionDTO(Long auctionId, String categoryName, String subcategoryName, String title, String description, Double price, List<AuctionImageDTO> images, List<AuctionParameterDTO> parameters) {
+        this.auctionId = auctionId;
+        this.categoryName = categoryName;
+        this.subcategoryName = subcategoryName;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.images = images;
+        this.parameters = parameters;
+    }
+
     public AuctionDTO(String categoryName, String subcategoryName, String title, String description, Double price, List<AuctionImageDTO> images, List<AuctionParameterDTO> parameters) {
         this.categoryName = categoryName;
         this.subcategoryName = subcategoryName;
