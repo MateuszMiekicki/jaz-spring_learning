@@ -26,7 +26,7 @@ public class AuctionImageRepository {
                 .getResultList();
     }
 
-    public void deleteImage(AuctionImageEntity auctionImageEntity){
+    public void delete(AuctionImageEntity auctionImageEntity){
         entityManager.remove(auctionImageEntity);
     }
 }

@@ -52,7 +52,6 @@ public class AuctionRepository {
         } catch (NoResultException msg) {
             return null;
         }
-
     }
 
     public void deleteAuction(AuctionEntity auctionEntity) {

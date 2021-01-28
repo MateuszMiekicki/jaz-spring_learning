@@ -81,6 +81,7 @@ public class AuctionController {
             auctionParameterEntity.setAuctionId(auctionId);
             auctionParameterEntity.setParameterId(parameterEntity.getId());
             auctionParameterEntity.setValue(parameter.getValue());
+            auctionParameterRepository.save(auctionParameterEntity);
         }
         return new ResponseEntity("Added auction", HttpStatus.CREATED);
     }
@@ -88,7 +89,48 @@ public class AuctionController {
     @PreAuthorize("hasAnyAuthority('admin', 'user')")
     @PutMapping("allezon/auctions")
     public ResponseEntity<AuctionEntity> updateAuction(@RequestBody AuctionDTO auctionDTO) {
+        AuctionEntity auctionEntity = auctionRepository.findByAuthorIdAndAuctionId(userSession.getUserId(), auctionDTO.getAuctionId());
+        if (auctionEntity == null) {
+            return new ResponseEntity("The selected auction does not exist.", HttpStatus.NOT_FOUND);
+        }
+        auctionEntity.setPrice(auctionDTO.getPrice());
+        auctionEntity.setDescription(auctionDTO.getDescription());
+        CategoryEntity categoryEntity = categoryRepository.findByName(auctionDTO.getCategoryName());
+        if (categoryEntity == null) {
+            return new ResponseEntity("The selected category does not exist.", HttpStatus.NOT_FOUND);
+        }
+        auctionEntity.setCategoryId(categoryEntity.getId());
+        SubcategoryEntity subcategoryEntity = subcategoryRepository.findByIdCategoryAndNameSubcategory(categoryEntity.getId(),
+                auctionDTO.getSubcategoryName());
+        if (subcategoryEntity == null) {
+            return new ResponseEntity("The selected subcategory does not exist.", HttpStatus.NOT_FOUND);
+        }
+        auctionEntity.setSubcategoryId(subcategoryEntity.getId());
+        auctionRepository.updateAuction(auctionEntity);
 
+        for (AuctionParameterEntity parameter : auctionParameterRepository.findByAuctionId(auctionEntity.getId())) {
+            auctionParameterRepository.delete(parameter);
+        }
+        for (AuctionParameterDTO parameter : auctionDTO.getParameters()) {
+            ParameterEntity parameterEntity = parameterRepository.getByName(parameter.getName());
+            if (parameterEntity == null) {
+                return new ResponseEntity("The selected parameter does not exist.", HttpStatus.NOT_FOUND);
+            }
+            AuctionParameterEntity auctionParameterEntity = new AuctionParameterEntity();
+            auctionParameterEntity.setAuctionId(auctionEntity.getId());
+            auctionParameterEntity.setParameterId(parameterEntity.getId());
+            auctionParameterEntity.setValue(parameter.getValue());
+            auctionParameterRepository.save(auctionParameterEntity);
+        }
+        for (AuctionImageEntity image : auctionImageRepository.getImages(auctionEntity.getId())) {
+            auctionImageRepository.delete(image);
+        }
+        for (AuctionImageDTO image : auctionDTO.getImages()) {
+            AuctionImageEntity auctionImageEntity = new AuctionImageEntity();
+            auctionImageEntity.setAuctionId(auctionEntity.getId());
+            auctionImageEntity.setUrl(image.getURL());
+            auctionImageRepository.addImage(auctionImageEntity);
+        }
         return new ResponseEntity("Updated auction", HttpStatus.OK);
     }
 
@@ -100,7 +142,10 @@ public class AuctionController {
             return new ResponseEntity("The selected auction does not exist.", HttpStatus.NOT_FOUND);
         }
         for (AuctionImageEntity image : auctionImageRepository.getImages(auctionEntity.getId())) {
-            auctionImageRepository.deleteImage(image);
+            auctionImageRepository.delete(image);
+        }
+        for (AuctionParameterEntity parameter : auctionParameterRepository.findByAuctionId(auctionEntity.getId())) {
+            auctionParameterRepository.delete(parameter);
         }
         auctionRepository.deleteAuction(auctionEntity);
         return new ResponseEntity("Deleted auction", HttpStatus.NO_CONTENT);
