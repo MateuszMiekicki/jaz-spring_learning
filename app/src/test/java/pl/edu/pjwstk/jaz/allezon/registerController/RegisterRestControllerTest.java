@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jaz.allezon.loginController;
+package pl.edu.pjwstk.jaz.allezon.registerController;
 
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
