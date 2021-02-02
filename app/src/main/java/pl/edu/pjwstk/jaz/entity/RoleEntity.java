@@ -26,4 +26,9 @@ public class RoleEntity {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public RoleEntity withId(Long id){
+        this.id = id;
+        return this;
+    }
 }

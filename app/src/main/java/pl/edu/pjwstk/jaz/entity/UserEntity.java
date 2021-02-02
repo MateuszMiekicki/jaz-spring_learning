@@ -47,4 +47,19 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public UserEntity withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public UserEntity withPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public UserEntity withRole(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
+        return this;
+    }
 }

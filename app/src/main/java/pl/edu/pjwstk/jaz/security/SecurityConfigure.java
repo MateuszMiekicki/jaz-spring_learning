@@ -12,6 +12,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/allezon/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
