@@ -38,6 +38,7 @@ public class CategoryRestController {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(categoriesJSON.toString());
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @PreAuthorize("hasAnyAuthority('admin')")
@@ -62,6 +63,9 @@ public class CategoryRestController {
         CategoryEntity categoryEntity = categoryRepository.findByName(categoryDTO.getName());
         if (categoryEntity == null) {
             return new ResponseEntity<>("Such an category does not exists in the database.", HttpStatus.NOT_FOUND);
+        }
+        for(SubcategoryEntity subcategoryEntity : categoryEntity.getSubcategories()){
+            subcategoryRepository.delete(subcategoryEntity);
         }
         categoryRepository.delete(categoryEntity);
         return new ResponseEntity<>("Deleted category.", HttpStatus.NO_CONTENT);

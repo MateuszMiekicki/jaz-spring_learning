@@ -37,4 +37,14 @@ public class SubcategoryEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+    public SubcategoryEntity withCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
+        return this;
+    }
+
+    public SubcategoryEntity withName(String name) {
+        this.name = name;
+        return this;
+    }
 }

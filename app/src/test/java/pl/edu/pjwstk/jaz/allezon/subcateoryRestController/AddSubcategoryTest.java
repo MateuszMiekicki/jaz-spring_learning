@@ -1,4 +1,4 @@
-package pl.edu.pjwstk.jaz.allezon.categoryRestController;
+package pl.edu.pjwstk.jaz.allezon.subcateoryRestController;
 
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @IntegrationTest
-public class AddCategoryTest {
+public class AddSubcategoryTest {
     public Map<String, String> administratorCookies() {
         String json = "{ \"email\": \"admin@jaz.com\", \"password\": \"admin\" }";
         return given()
@@ -29,7 +29,7 @@ public class AddCategoryTest {
 
     @BeforeAll
     public static void registerUser() {
-        String json = "{ \"email\": \"userForAddCategory@jaz.com\", \"password\": \"password\" }";
+        String json = "{ \"email\": \"userForAddSubcategory@jaz.com\", \"password\": \"password\" }";
         given()
                 .contentType(ContentType.JSON)
                 .body(json)
@@ -41,7 +41,7 @@ public class AddCategoryTest {
     }
 
     public Map<String, String> userCookies() {
-        String json = "{ \"email\": \"userForAddCategory@jaz.com\", \"password\": \"password\" }";
+        String json = "{ \"email\": \"userForAddSubcategory@jaz.com\", \"password\": \"password\" }";
         return given()
                 .contentType(ContentType.JSON)
                 .body(json)
@@ -52,8 +52,8 @@ public class AddCategoryTest {
     }
 
     @Test
-    public void shouldReturn201WhenAddNewCategoryAsAdmin() {
-        String json = "{ \"name\": \"new\" }";
+    public void shouldReturn201WhenAddNewSubcategoryAsAdmin() {
+        String json = "{ \"name\": \"newCategoryForSubcategory\" }";
         given()
                 .cookies(administratorCookies())
                 .contentType(ContentType.JSON)
@@ -62,50 +62,47 @@ public class AddCategoryTest {
                 .post("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_CREATED));
+        json = "{ \"categoryName\": \"newCategoryForSubcategory\", \"subcategoryName\":\"subcategory newCategoryForSubcategory\" }";
+        given()
+                .cookies(administratorCookies())
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/categories/subcategories")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CREATED));
+        given()
+                .get("/api/allezon/categories/newCategoryForSubcategory")
+                .then()
+                .body(equalTo("[\"subcategory newCategoryForSubcategory\"]"))
+                .statusCode(equalTo(HttpStatus.SC_OK));
     }
 
     @Test
     public void shouldReturn403WhenAddNewCategoryAsStandardUser() {
-        String json = "{ \"name\": \"new\" }";
+        String json = "{ \"name\": \"newCategoryForSubcategoryAsStandardUser\" }";
+        given()
+                .cookies(administratorCookies())
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/categories")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CREATED));
+        json = "{ \"categoryName\": \"newCategoryForSubcategoryAsStandardUser\", \"subcategoryName\":\"subcategory newCategoryForSubcategory\" }";
         given()
                 .cookies(userCookies())
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("/api/allezon/categories")
+                .post("/api/allezon/categories/subcategories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
     }
 
     @Test
     public void shouldReturn403WhenAddNewCategoryAsGuest() {
-        String json = "{ \"name\": \"new\" }";
-        given()
-                .contentType(ContentType.JSON)
-                .body(json)
-                .when()
-                .post("/api/allezon/categories")
-                .then()
-                .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
-    }
-
-    @Test
-    public void shouldReturn400WhenAddNewCategoryAsAdminWithEmptyNameCategory() {
-        String json = "{ \"name\": \"\" }";
-        given()
-                .cookies(administratorCookies())
-                .contentType(ContentType.JSON)
-                .body(json)
-                .when()
-                .post("/api/allezon/categories")
-                .then()
-                .statusCode(equalTo(HttpStatus.SC_BAD_REQUEST))
-                .body(equalTo("Category name is empty."));
-    }
-
-    @Test
-    public void shouldReturn409WhenAddRedundantCategoryAsAdmin() {
-        String json = "{ \"name\": \"redundant category\" }";
+        String json = "{ \"name\": \"newCategoryForSubcategoryAsGuest\" }";
         given()
                 .cookies(administratorCookies())
                 .contentType(ContentType.JSON)
@@ -114,6 +111,19 @@ public class AddCategoryTest {
                 .post("/api/allezon/categories")
                 .then()
                 .statusCode(equalTo(HttpStatus.SC_CREATED));
+        json = "{ \"categoryName\": \"newCategoryForSubcategoryAsGuest\", \"subcategoryName\":\"subcategory newCategoryForSubcategory\" }";
+        given()
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/categories/subcategories")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_FORBIDDEN));
+    }
+
+    @Test
+    public void shouldReturn409WhenAddRedundantCategoryAsAdmin() {
+        String json = "{ \"name\": \"newRedundantCategoryForSubcategory\" }";
         given()
                 .cookies(administratorCookies())
                 .contentType(ContentType.JSON)
@@ -121,7 +131,23 @@ public class AddCategoryTest {
                 .when()
                 .post("/api/allezon/categories")
                 .then()
-                .statusCode(equalTo(HttpStatus.SC_CONFLICT))
-                .body(equalTo("Such an category exists in the database."));
+                .statusCode(equalTo(HttpStatus.SC_CREATED));
+        json = "{ \"categoryName\": \"newRedundantCategoryForSubcategory\", \"subcategoryName\":\"subcategory newCategoryForSubcategory\" }";
+        given()
+                .cookies(administratorCookies())
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/categories/subcategories")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CREATED));
+        given()
+                .cookies(administratorCookies())
+                .contentType(ContentType.JSON)
+                .body(json)
+                .when()
+                .post("/api/allezon/categories/subcategories")
+                .then()
+                .statusCode(equalTo(HttpStatus.SC_CONFLICT));
     }
 }

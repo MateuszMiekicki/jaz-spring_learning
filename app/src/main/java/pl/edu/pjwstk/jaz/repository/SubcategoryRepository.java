@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface SubcategoryRepository extends CrudRepository<SubcategoryEntity, Long> {
     List<SubcategoryEntity> findByCategoryEntity(CategoryEntity categoryEntity);
+    SubcategoryEntity findByCategoryEntityAndName(CategoryEntity categoryEntity, String subcategoryName);
 }
