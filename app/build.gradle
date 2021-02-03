@@ -35,6 +35,8 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.2'
     // https://mvnrepository.com/artifact/org.testcontainers/postgresql
     testCompile group: 'org.testcontainers', name: 'postgresql', version: '1.15.1'
+    // https://mvnrepository.com/artifact/org.json/json
+    compile group: 'org.json', name: 'json', version: '20201115'
 
 }
 
