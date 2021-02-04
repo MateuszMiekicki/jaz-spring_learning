@@ -42,42 +42,26 @@ public class AuctionRestController {
     }
 
     @GetMapping("allezon/auctions")
-    public ResponseEntity<String> getAuctions() {
-        //ToDo: poprawic wypisanie za pomoca obiektow json
+    public void getAuctions(HttpServletResponse response) throws IOException {
         StringBuilder output = new StringBuilder();
+        output.append("<html>");
         for (AuctionEntity auctionEntity : auctionRepository.findAll()) {
-            output.append('\n');
-            output.append(auctionEntity.getId());
-            output.append('\n');
-            output.append("email " + auctionEntity.getAuthor().getEmail());
-            output.append('\n');
-            output.append(auctionEntity.getAuctionCategory().getName());
-            output.append('\n');
-            output.append(auctionEntity.getAuctionSubcategory().getName());
-            output.append('\n');
-            output.append(auctionEntity.getPrice());
-            output.append('\n');
-            for (AuctionImageEntity auctionImageEntity : auctionEntity.getImages()) {
-                output.append(auctionImageEntity.getUrl());
-                output.append('\n');
-            }
-            for (AuctionParameterEntity auctionParameterEntity : auctionEntity.getParameters()) {
-                output.append(auctionParameterEntity.getValue());
-                output.append('\n');
-                output.append(auctionParameterEntity.getParameterEntity().getName());
-                output.append('\n');
-            }
-            output.append("------------------------------------------");
-            output.append('\n');
+            output.append("Auction id: " + auctionEntity.getId() + "<br>");
+            output.append("Author email: " + auctionEntity.getAuthor().getEmail() + "<br>");
+            output.append("image: " + "<img src=\"" + auctionEntity.getImages().get(0).getUrl() + "\"/>" + "<br>");
         }
-        return new ResponseEntity<>(output.toString(), HttpStatus.OK);
+        output.append("</html>");
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(output.toString());
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @GetMapping("allezon/auctions/{userEmail}")
     public void getAuctions(@PathVariable("userEmail") String userEmail, HttpServletResponse response) throws IOException {
         JSONArray auctions = new JSONArray();
         UserEntity user = userRepository.findByEmail(userEmail);
-        if(user==null){
+        if (user == null) {
             response.getWriter().write(auctions.toString());
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
