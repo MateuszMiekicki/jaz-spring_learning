@@ -39,8 +39,9 @@ public class LoginRestController {
             return new ResponseEntity<>("Such an email not exists in the database.", HttpStatus.BAD_REQUEST);
         }
         if (passwordEncoder.matches(user.getPassword(), userEntity.getPassword())) {
-            userSession.logIn();
             SecurityContextHolder.getContext().setAuthentication(new AuthenticationToken(userEntity, entityManager));
+            userSession.logIn();
+            userSession.setUserEntity(userEntity);
             return new ResponseEntity<>("Logged in.", HttpStatus.OK);
         }
         return new ResponseEntity<>("Email or password is incorrect.", HttpStatus.UNAUTHORIZED);
